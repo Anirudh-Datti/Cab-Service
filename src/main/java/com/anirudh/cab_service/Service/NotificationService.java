@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.anirudh.cab_service.Model.Driver;
 import com.anirudh.cab_service.Model.dto.PassengerRideRequest;
 import com.anirudh.cab_service.Model.dto.RideNotificationPayload;
+import com.anirudh.cab_service.Model.dto.RiderDriverConnection;
 
 @Service
 public class NotificationService {
@@ -37,5 +38,19 @@ public class NotificationService {
 
     public void notifyPassenger(String userId) {
         // implement later
+    }
+
+    public void connectDriverRider(RiderDriverConnection driverResponse) {
+        // Push to User1 (Driver) — show passenger details page
+        messagingTemplate.convertAndSend(
+            "/topic/ride/" + driverResponse.driverId(),
+            driverResponse.request()
+        );
+
+        // Push to User2 (Passenger) — update their page
+        messagingTemplate.convertAndSend(
+            "/topic/ride/" + driverResponse.request().riderId(),
+            "Your ride was accepted! your Driver is on the way!!"
+        );
     }
 }
