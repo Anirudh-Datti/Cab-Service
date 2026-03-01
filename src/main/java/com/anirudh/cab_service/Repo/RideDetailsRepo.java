@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.anirudh.cab_service.Model.RideDetails;
 
-public interface RideDetailsRepo extends JpaRepository<RideDetails, Integer>{
+public interface RideDetailsRepo extends JpaRepository<RideDetails, String>{
 
     
 } 

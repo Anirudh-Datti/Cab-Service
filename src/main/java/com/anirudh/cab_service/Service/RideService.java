@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import com.anirudh.cab_service.Model.Driver;
@@ -22,6 +23,9 @@ public class RideService {
     private FareService fareService;
     @Autowired
     private NotificationService notificationService;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @Autowired
     private DriverRepo driverRepo;
@@ -64,11 +68,15 @@ public class RideService {
                     .id(rideId)
                     .riderId(driverResponse.request().riderId())
                     .DriverId(driverResponse.driverId())
-                    .status(driverResponse.accept())
+                    .status(rideId)
                     .build();
         rideDetailsRepo.save(details);
 
         //notify or change page to driver/rider
+
+        notificationService.connectDriverRider(driverResponse);
+    )
+
 
     }
     
