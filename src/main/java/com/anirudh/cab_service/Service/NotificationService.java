@@ -53,4 +53,18 @@ public class NotificationService {
             "Your ride was accepted! your Driver is on the way!!"
         );
     }
+
+    public void endRide(RiderDriverConnection ride) {
+        // Notify Driver
+        messagingTemplate.convertAndSend(
+                "/topic/ride/" + ride.driverId(),
+                "RIDE_COMPLETED"
+        );
+
+        // Notify Passenger
+        messagingTemplate.convertAndSend(
+                "/topic/ride/" + ride.request().riderId(),
+                "RIDE_COMPLETED"
+        );
+    }
 }

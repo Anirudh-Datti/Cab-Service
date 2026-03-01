@@ -28,7 +28,14 @@ public class DriverPageController {
         if (driverResponse.accept())
             rideService.connectWithRider(driverResponse);
         return null;    
-        
-
     }
+
+    @PostMapping("/update/driver/{id}")
+    public Void completeRide(RiderDriverConnection ride)  {
+        if (ride.rideStatus() == "Completed") {
+            rideService.rideCompleted(ride);
+        }
+        return null;
+    }
+
 }
