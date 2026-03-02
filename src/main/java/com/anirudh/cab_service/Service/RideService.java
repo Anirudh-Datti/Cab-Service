@@ -77,12 +77,15 @@ public class RideService {
 
 
     }
+
+    public void rideCompleted(RiderDriverConnection ride) {
+        RideDetails rideDetails = rideDetailsRepo.findBydriverIdWhereStatusIsOngoing(ride.driverId());
+        rideDetails.setStatus("Completed");
+
+        notificationService.endRide(ride);
+    }
     
-    // public void assignDriver(String userId) {
-    //     //change in rideDetails repo
-    //     //change passenger availablity to false
-    //     notificationService.notifyPassenger(userId); // what about fare 
-    // }
+
     
     
     

@@ -6,5 +6,7 @@ import com.anirudh.cab_service.Model.RideDetails;
 
 public interface RideDetailsRepo extends JpaRepository<RideDetails, String>{
 
+    RideDetails findBydriverIdWhereStatusIsOngoing(String driverId);
+
     
 } 
